@@ -54,7 +54,7 @@ void Port_Init(const Port_ConfigType * ConfigPtr )
 
         volatile uint32 * Port_Ptr = NULL_PTR; /* point to the required Port Registers base address */
 
-        uint8 Port_PinID = PORT_ZERO ;         /* refer to Port Pin Id */
+        Port_PinType Port_PinID = PORT_ZERO ;         /* refer to Port Pin Id */
 
         for(Port_PinID = PORT_ZERO ; Port_PinID < PORT_CONFIGURED_PINS ; Port_PinID++)
         {
@@ -295,7 +295,7 @@ void Port_RefreshPortDirection(void)
     {
         volatile uint32 * Port_Ptr = NULL_PTR; /* point to the required Port Registers base address */
 
-        uint8 Port_PinID = PORT_ZERO ;         /* refer to Port Pin Id */
+        Port_PinType Port_PinID = PORT_ZERO ;         /* refer to Port Pin Id */
 
         for(Port_PinID = PORT_ZERO ; Port_PinID < PORT_CONFIGURED_PINS ; Port_PinID++)
         {
@@ -514,7 +514,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
             SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_ALT_FUNC_REG_OFFSET) , Port_PinPtr[Pin].PinNum);               /* Enable Alternative function for this pin by Set the corresponding bit in GPIOAFSEL register */
 
             *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_CTL_REG_OFFSET) &= ~(0x0000000F << (Port_PinPtr[Pin].PinNum * 4));     /* Clear the PMCx bits for this pin */
-            *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_CTL_REG_OFFSET) |= ( Mode << (Port_PinPtr[Pin].PinNum * 4));    /* Set the PMCx bits for this pin */
+            *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_CTL_REG_OFFSET) |= ( Mode << (Port_PinPtr[Pin].PinNum * 4));           /* Set the PMCx bits for this pin */
 
             SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_DIGITAL_ENABLE_REG_OFFSET) , Port_PinPtr[Pin].PinNum);         /* Set the corresponding bit in the GPIODEN register to enable digital functionality on this pin */
         }
