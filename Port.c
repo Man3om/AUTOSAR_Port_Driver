@@ -175,7 +175,7 @@ void Port_Init(const Port_ConfigType * ConfigPtr )
 #if(PORT_SET_PIN_DIRECTION_API == STD_ON)
 void Port_SetPinDirection(Port_PinType Pin,Port_PinDirectionType Direction)
 {
-    boolean Error = STD_LOW ;
+    boolean Error = FALSE ;
     volatile uint32 * Port_Ptr = NULL_PTR; /* point to the required Port Registers base address */
 
 #if(PORT_DEV_ERROR_DETECT == STD_ON)
@@ -194,7 +194,7 @@ void Port_SetPinDirection(Port_PinType Pin,Port_PinDirectionType Direction)
     if(Pin >= PORT_CONFIGURED_PINS)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_DIRECTION_SID,PORT_E_PARAM_PIN);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -205,7 +205,7 @@ void Port_SetPinDirection(Port_PinType Pin,Port_PinDirectionType Direction)
     if(Port_PinPtr[Pin].DirectionChangeable == STD_OFF)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_DIRECTION_SID,PORT_E_DIRECTION_UNCHANGEABLE);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -213,7 +213,7 @@ void Port_SetPinDirection(Port_PinType Pin,Port_PinDirectionType Direction)
     }
 #endif
 
-    if(Error != STD_LOW)
+    if(Error != TRUE)
     {
         switch(Port_PinPtr[Pin].PortNum)
         {
@@ -405,7 +405,7 @@ void Port_GetVersionInfo(Std_VersionInfoType* versioninfo)
 #if(PORT_SET_PIN_MODE_API == STD_ON)
 void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
 {
-    boolean Error = STD_LOW ;
+    boolean Error = FALSE ;
     volatile uint32 * Port_Ptr = NULL_PTR; /* point to the required Port Registers base address */
 
 #if(PORT_DEV_ERROR_DETECT == STD_ON)
@@ -413,7 +413,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
     if(PORT_Status != PORT_INITIALIZED)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_DIRECTION_SID,PORT_E_UNINIT);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -424,7 +424,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
     if(Pin >= PORT_CONFIGURED_PINS)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_DIRECTION_SID,PORT_E_PARAM_PIN);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -435,7 +435,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
     if(Port_PinPtr[Pin].ModeChangeable == STD_OFF)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_MODE_SID,PORT_E_MODE_UNCHANGEABLE);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -446,7 +446,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
     if(Mode > PORT_PIN_MODE_DIO)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_MODE_SID,PORT_E_PARAM_INVALID_MODE);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
@@ -454,7 +454,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
     }
 #endif
 
-    if(Error != STD_LOW)
+    if(Error != TRUE)
     {
         switch(Port_PinPtr[Pin].PortNum)
         {
