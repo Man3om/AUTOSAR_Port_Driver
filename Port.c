@@ -183,7 +183,7 @@ void Port_SetPinDirection(Port_PinType Pin,Port_PinDirectionType Direction)
     if(PORT_Status != PORT_INITIALIZED)
     {
         Det_ReportError(PORT_MODULE_ID,PORT_INSTANCE_ID,PORT_SET_PIN_DIRECTION_SID,PORT_E_UNINIT);
-        Error = STD_HIGH ;
+        Error = TRUE ;
     }
     else
     {
