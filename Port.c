@@ -85,7 +85,7 @@ void Port_Init(const Port_ConfigType * ConfigPtr )
 
             if( ((Port_PinPtr[Port_PinID].PortNum == 3) && (Port_PinPtr[Port_PinID].PinNum == 7)) || ((Port_PinPtr[Port_PinID].PortNum == 5) && (Port_PinPtr[Port_PinID].PinNum == 0)) ) /* PD7 or PF0 */
             {
-                *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_LOCK_REG_OFFSET) = 0x4C4F434B;                              /* Unlock the GPIOCR register */
+                *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_LOCK_REG_OFFSET) = 0x4C4F434B;                                 /* Unlock the GPIOCR register */
                 SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_COMMIT_REG_OFFSET) , Port_PinPtr[Port_PinID].PinNum);  /* Set the corresponding bit in GPIOCR register to allow changes on this pin */
             }
             else
@@ -98,7 +98,7 @@ void Port_Init(const Port_ConfigType * ConfigPtr )
             case PORT_PIN_OUT:
                 SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_DIR_REG_OFFSET) , Port_PinPtr[Port_PinID].PinNum);               /* Set the corresponding bit in the GPIODIR register to configure it as output pin */
 
-                if(Port_PinPtr[Port_PinID].initial_value == STD_HIGH)
+                if(Port_PinPtr[Port_PinID].initial_value == PORT_PIN_LEVEL_HIGH)
                 {
                     SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_DATA_REG_OFFSET) , Port_PinPtr[Port_PinID].PinNum);          /* Set the corresponding bit in the GPIODATA register to provide initial value 1 */
                 }
@@ -293,7 +293,7 @@ void Port_RefreshPortDirection(void)
     else
 #endif
     {
-        volatile uint32 * Port_Ptr = NULL_PTR; /* point to the required Port Registers base address */
+        volatile uint32 * Port_Ptr = NULL_PTR;        /* point to the required Port Registers base address */
 
         Port_PinType Port_PinID = PORT_ZERO ;         /* refer to Port Pin Id */
 
@@ -326,7 +326,7 @@ void Port_RefreshPortDirection(void)
 
             if( ((Port_PinPtr[Port_PinID].PortNum == 3) && (Port_PinPtr[Port_PinID].PinNum == 7)) || ((Port_PinPtr[Port_PinID].PortNum == 5) && (Port_PinPtr[Port_PinID].PinNum == 0)) ) /* PD7 or PF0 */
             {
-                *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_LOCK_REG_OFFSET) = 0x4C4F434B;                              /* Unlock the GPIOCR register */
+                *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_LOCK_REG_OFFSET) = 0x4C4F434B;                                 /* Unlock the GPIOCR register */
                 SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_COMMIT_REG_OFFSET) , Port_PinPtr[Port_PinID].PinNum);  /* Set the corresponding bit in GPIOCR register to allow changes on this pin */
             }
             else
@@ -484,7 +484,7 @@ void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode)
         if( ((Port_PinPtr[Pin].PortNum == 3) && (Port_PinPtr[Pin].PinNum == 7)) || ((Port_PinPtr[Pin].PortNum == 5) && (Port_PinPtr[Pin].PinNum == 0)) ) /* PD7 or PF0 */
         {
             *(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_LOCK_REG_OFFSET) = 0x4C4F434B;                              /* Unlock the GPIOCR register */
-            SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_COMMIT_REG_OFFSET) , Port_PinPtr[Pin].PinNum);  /* Set the corresponding bit in GPIOCR register to allow changes on this pin */
+            SET_BIT(*(volatile uint32 *)((volatile uint8 *)Port_Ptr + PORT_COMMIT_REG_OFFSET) , Port_PinPtr[Pin].PinNum);      /* Set the corresponding bit in GPIOCR register to allow changes on this pin */
         }
         else
         {
